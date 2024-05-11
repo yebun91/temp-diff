@@ -18,7 +18,7 @@ struct TopBarView: View {
     
     var body: some View {
         HStack {
-            IconButtonView(imageName: "bars-solid").opacity(0)
+            IconButtonView(imageName: "location-dot-solid").opacity(0)
             Spacer()
             Text(locationName)
                 .foregroundColor(Color("text"))

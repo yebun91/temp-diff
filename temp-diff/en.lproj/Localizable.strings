@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  temp-diff
+
+  Created by 최유진 on 5/11/24.
+  
+*/
+"Wind" = "Wind";
+"Humidity" = "Humidity";
+"Rainfall" = "Rainfall";
+"TempDifference" = "Yesterday-Today temp difference";
+"NowTemp" = "Current temp";
+
