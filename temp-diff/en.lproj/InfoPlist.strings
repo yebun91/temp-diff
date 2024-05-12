@@ -7,4 +7,4 @@
 */
 "CFBundleDisplayName" = "Weather Yesterday";
 "CFBundleName" = "Weather Yesterday";
-"NSLocationWhenInUseUsageDescription" = "The app requires permission to access your location.";
+"NSLocationWhenInUseUsageDescription" = "Your location data is used to provide weather information for your area.";
