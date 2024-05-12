@@ -110,7 +110,6 @@ import CoreLocation
             // 양수일 때 "+" 기호를 붙여줍니다.
             let format = feelTemp > 0 ? "+%.0f" : "%.0f"
             
-            print("today:", sortedKeys[index + 24], "yesterday:", sortedKeys[index])
             return String(format: format, feelTemp)
         }
         return "0"
