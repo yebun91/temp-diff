@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  temp-diff
+
+  Created by 최유진 on 5/11/24.
+  
+*/
+"CFBundleDisplayName" = "Weather Yesterday";
+"CFBundleName" = "Weather Yesterday";

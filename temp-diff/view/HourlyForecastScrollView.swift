@@ -28,7 +28,7 @@ struct HourlyForecastScrollView: View {
                         let hourOnly = weatherKitManager.hourString(from: weatherToday.date)
                         
                         // 어제와 오늘의 온도차를 가져옴
-                        let feelTempString = weatherKitManager.calculateFeelTemp(index: index, sortedKeys: Array(sortedKeys))
+                        let feelTempString = weatherKitManager.calculateFeelTemp(index: index, sortedKeys: Array(weatherKitManager.weatherInfo.keys).sorted())
                         
                         let weather = weatherKitManager.getWeatherIconForCondition(condition: weatherToday.condition)
                         

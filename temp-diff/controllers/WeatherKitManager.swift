@@ -25,6 +25,7 @@ import CoreLocation
             self.objectWillChange.send()
         }
     }
+    @Published var feelTemperature: String = ""
     
     /**
      어제부터 내일까지의 날씨 데이터를 api로 불러옴
@@ -41,6 +42,8 @@ import CoreLocation
                 return try await WeatherService.shared.weather(for: location, including: .hourly(startDate: yesterday, endDate: tomorrow))
                 
             }.value
+            
+            weatherInfo.removeAll() // weatherInfo 초기화 함.
             
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH"
@@ -98,15 +101,16 @@ import CoreLocation
      어제와 오늘의 온도차를 가져옴
      */
     func calculateFeelTemp(index: Int, sortedKeys: [String]) -> String {
-        let yesterdayKey = Array(self.weatherInfo.keys).sorted().prefix(24)
-        if index >= 0,
-           let weatherToday = self.weatherInfo[sortedKeys[index]],
-           let weatherYesterday = self.weatherInfo[yesterdayKey[index]] {
+        if index < sortedKeys.count - 24,
+           let weatherToday = weatherInfo[sortedKeys[index + 24]],
+           let weatherYesterday = weatherInfo[sortedKeys[index]] {
             let tempToday = weatherToday.temperature.value.rounded()
             let tempYesterday = weatherYesterday.temperature.value.rounded()
             let feelTemp = tempToday - tempYesterday
             // 양수일 때 "+" 기호를 붙여줍니다.
             let format = feelTemp > 0 ? "+%.0f" : "%.0f"
+            
+            print("today:", sortedKeys[index + 24], "yesterday:", sortedKeys[index])
             return String(format: format, feelTemp)
         }
         return "0"
