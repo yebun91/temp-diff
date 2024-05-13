@@ -25,13 +25,17 @@ struct TopBarView: View {
             Spacer()
             IconButtonView(imageName: "location-dot-solid")
         }
-        .task {
-            await fetchLocationName()
-        }
-        .onReceive(locationDataManager.$latitude.combineLatest(locationDataManager.$longitude)) { _, _ in
-            Task {
-                await fetchLocationName()
+        .onAppear {
+            // 위치 데이터가 업데이트 될 때마다 fetchLocationName를 호출
+            NotificationCenter.default.addObserver(forName: NSNotification.Name("LocationUpdated"), object: nil, queue: .main) { _ in
+                Task {
+                    await fetchLocationName()
+                }
             }
+        }
+        // 화면이 사라지게 되면 구독 취소
+        .onDisappear {
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name("LocationUpdated"), object: nil)
         }
         
     }
