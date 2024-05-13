@@ -1,31 +1,48 @@
+//
+//  AppInfoView.swift
+//  temp-diff
+//
+//  Created by 최유진 on 5/13/24.
+//
+
 import SwiftUI
 
 struct AppInfoView: View {
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        VStack(spacing: 20) {
-            Text("앱 정보")
+        VStack(spacing: 30) {
+            Text(NSLocalizedString("appName", comment: "앱 이름"))
                 .font(.largeTitle)
                 .fontWeight(.bold)
-            
-            Text("이 앱은 SwiftUI로 제작되었습니다.\nAPI 도움을 주신 분들: ...\n기타 등등")
-                .font(.body)
+                
+            Text("- 도움을 주신 분들 -")
+                .font(.title)
                 .multilineTextAlignment(.center)
+            VStack(){
+                Text("아이디어 제공: 박은빈")
+                    .font(.body)
+                    .multilineTextAlignment(.center)
+                Text("어플제작 재촉 담당: 박정우")
+                    .font(.body)
+                    .multilineTextAlignment(.center)
+            }
+            Text(NSLocalizedString("WeatherKitInfo", comment: "웨더키트 설명"))
+                .font(.body)
             
             Button(action: {
               presentationMode.wrappedValue.dismiss()
             }) {
-                Text("닫기")
+                Text(NSLocalizedString("close", comment: "닫기"))
                     .padding()
-                    .background(Color.blue)
+                    .background(Color("reverseText"))
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }
         }
         .padding()
         .background(Color.white)
-        .cornerRadius(20)
-        .shadow(radius: 10)
+        .foregroundColor(Color("text"))
     }
 }
+

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		78388D0F2BF2111C00524B5E /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78388D0E2BF2111C00524B5E /* AppInfoView.swift */; };
 		789454E42BEF74FE0058BEBD /* temp_diffApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789454E32BEF74FE0058BEBD /* temp_diffApp.swift */; };
 		789454E62BEF74FE0058BEBD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789454E52BEF74FE0058BEBD /* ContentView.swift */; };
 		789454E82BEF75000058BEBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 789454E72BEF75000058BEBD /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		78388D0E2BF2111C00524B5E /* AppInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
 		788D27B82BEF839200D5373F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		788D27B92BEF855200D5373F /* temp-diff.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "temp-diff.entitlements"; sourceTree = "<group>"; };
 		789454E02BEF74FE0058BEBD /* temp-diff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "temp-diff.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +134,7 @@
 				789454F52BEF75530058BEBD /* HourlyForecastScrollView.swift */,
 				789454F42BEF75530058BEBD /* TopBarView.swift */,
 				789454F22BEF75530058BEBD /* WeatherIndicatorView.swift */,
+				78388D0E2BF2111C00524B5E /* AppInfoView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 			knownRegions = (
 				en,
 				ko,
+				Base,
 			);
 			mainGroup = 789454D72BEF74FE0058BEBD;
 			productRefGroup = 789454E12BEF74FE0058BEBD /* Products */;
@@ -270,6 +274,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78388D0F2BF2111C00524B5E /* AppInfoView.swift in Sources */,
 				789454FA2BEF75530058BEBD /* TopBarView.swift in Sources */,
 				789455062BEF756D0058BEBD /* WeatherForecast.swift in Sources */,
 				789454E62BEF74FE0058BEBD /* ContentView.swift in Sources */,

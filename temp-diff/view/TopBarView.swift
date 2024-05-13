@@ -15,14 +15,14 @@ import CoreLocation
 struct TopBarView: View {
     @State private var locationName = "Loading..."
     @EnvironmentObject var locationDataManager: LocationDataManager
-    @Binding var showingInfoModal: Bool
+    @State private var showingInfoModal = false
     
     var body: some View {
         HStack {
             Button(action: {
                 showingInfoModal = true
             }) {
-                Image(systemName: "info-icon")
+                Image("info-icon")
                     .renderingMode(.template)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
