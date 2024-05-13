@@ -27,7 +27,7 @@ struct TopBarView: View {
         }
         .onAppear {
             // 위치 데이터가 업데이트 될 때마다 fetchLocationName를 호출
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("LocationUpdated"), object: nil, queue: .main) { _ in
+            NotificationCenter.default.addObserver(forName: Notification.Name("LocationUpdated"), object: nil, queue: .main) { _ in
                 Task {
                     await fetchLocationName()
                 }
@@ -35,7 +35,7 @@ struct TopBarView: View {
         }
         // 화면이 사라지게 되면 구독 취소
         .onDisappear {
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name("LocationUpdated"), object: nil)
+            NotificationCenter.default.removeObserver(self, name: Notification.Name("LocationUpdated"), object: nil)
         }
         
     }

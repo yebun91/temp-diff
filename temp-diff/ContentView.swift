@@ -35,8 +35,8 @@ struct ContentView: View {
         .onAppear {
             Task {
                 await weatherKitManager.getWeathersFromYesterdayToTomorrow(latitude: locationDataManager.latitude, longitude: locationDataManager.longitude)
-                     }
-                 }
+                    }
+                }
         .task{
             locationDataManager.weatherKitManager = weatherKitManager // 인스턴스를 공유합니다.
             await weatherKitManager.getWeathersFromYesterdayToTomorrow(latitude: locationDataManager.latitude, longitude: locationDataManager.longitude)

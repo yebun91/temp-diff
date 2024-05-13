@@ -80,7 +80,7 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
                 await weatherKitManager?.getWeathersFromYesterdayToTomorrow(latitude: self.latitude, longitude: self.longitude)
             }
             // 위치 데이터가 업데이트 된 후, 위치 이름을 가져오기 위해 fetchLocationName을 호출합니다.
-            NotificationCenter.default.post(name: NSNotification.Name("LocationUpdated"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name("LocationUpdated"), object: nil)
         }
     }
     
