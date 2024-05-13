@@ -15,10 +15,23 @@ import CoreLocation
 struct TopBarView: View {
     @State private var locationName = "Loading..."
     @EnvironmentObject var locationDataManager: LocationDataManager
+    @Binding var showingInfoModal: Bool
     
     var body: some View {
         HStack {
-            IconButtonView(imageName: "location-dot-solid").opacity(0)
+            Button(action: {
+                showingInfoModal = true
+            }) {
+                Image(systemName: "info-icon")
+                    .renderingMode(.template)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(Color("text"))
+                    .frame(width: 30, height: 30)
+                    .fullScreenCover(isPresented: $showingInfoModal, content: {
+                        AppInfoView()
+                    })
+            }
             Spacer()
             Text(locationName)
                 .foregroundColor(Color("text"))
