@@ -13,43 +13,34 @@ import CoreLocation
  상단 바를 정의하는 별도의 뷰
  */
 struct TopBarView: View {
-    @State private var locationName = "Loading..."
     @EnvironmentObject var locationDataManager: LocationDataManager
+    @State private var showingInfoModal = false
     
     var body: some View {
         HStack {
-            IconButtonView(imageName: "location-dot-solid").opacity(0)
+            Button(action: {
+                showingInfoModal = true
+            }) {
+                Image("info-icon")
+                    .renderingMode(.template)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(Color("text"))
+                    .frame(width: 30, height: 30)
+                    .fullScreenCover(isPresented: $showingInfoModal, content: {
+                        AppInfoView()
+                    })
+            }
             Spacer()
-            Text(locationName)
-                .foregroundColor(Color("text"))
+            if let locationName = locationDataManager.locationName {
+                Text(locationName)
+                    .foregroundColor(Color("text"))
+            } else {
+                Text("Location not available")
+                    .foregroundColor(Color("text"))
+            }
             Spacer()
             IconButtonView(imageName: "location-dot-solid")
-        }
-        .task {
-            await fetchLocationName()
-        }
-        .onReceive(locationDataManager.$latitude.combineLatest(locationDataManager.$longitude)) { _, _ in
-            Task {
-                await fetchLocationName()
-            }
-        }
-        
-    }
-    func fetchLocationName() async {
-        let location = CLLocation(latitude: locationDataManager.latitude, longitude: locationDataManager.longitude)
-        
-        let geocoder = CLGeocoder()
-        
-        do {
-            let placemarks = try await geocoder.reverseGeocodeLocation(location)
-            guard let placemark = placemarks.first else {
-                print("No valid placemarks found.")
-                return
-            }
-            
-            locationName = placemark.subLocality ?? "Unknown Location"
-        } catch {
-            print("Unable to reverse geocode the given location. Error: \(error)")
         }
     }
 }
@@ -68,19 +59,16 @@ struct IconButtonView: View {
     
     var body: some View {
         Button(action: {
-            // 로케이션 버튼을 클릭했을 경우
-            if imageName == "location-dot-solid" {
-                // 사용자가 사용자가 해당 앱에 대해 '앱 사용 중에만 위치 접근 허용'이라는 권한을 설정했는지를 확인하는 조건문
-                if locationDataManager.authorizationStatus == .authorizedWhenInUse {
-                    Task {
-                        await weatherKitManager.getWeathersFromYesterdayToTomorrow(latitude: locationDataManager.latitude, longitude: locationDataManager.longitude)
-                    }
-                } else {
-                    showSettingsAlert = false
-                    showSettingsAlert = true
-                    // SwiftUI가 이 변화를 감지하고 관련된 View를 업데이트하도록 먼저 showSettingsAlert = false로 설정함으로써 상태를 변경하고, 바로 다음 줄에서 showSettingsAlert = true로 다시 설정하여 실제로 원하는 상태(경고창을 표시하는 상태)로 만듦.
+            // 사용자가 사용자가 해당 앱에 대해 '접근 허용'이라는 권한을 설정했는지를 확인하는 조건문
+            if locationDataManager.getAuthorizationStatus() == .authorizedWhenInUse || locationDataManager.getAuthorizationStatus() == .authorizedAlways {
+                Task {
+                    // 위치 데이터 가져옴
+                    locationDataManager.requestLocation()
                 }
+            } else {
+                showSettingsAlert = true
             }
+   
         }) {
             Image(imageName)
                 .renderingMode(.template)
@@ -89,37 +77,46 @@ struct IconButtonView: View {
                 .foregroundColor(Color("text"))
                 .frame(width: 30, height: 30)
         }
-        .background(showSettingsAlert ? SettingsLauncher() : nil) // 사용자가 위치정보를 허용하지 않았을 경우 설정화면으로 이동시킴
-    }
-}
-
-
-struct SettingsLauncher: UIViewControllerRepresentable {
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        // This function doesn't need to do anything for an alert.
-    }
-    
-    typealias UIViewControllerType = UIViewController
-    
-    func makeUIViewController(context: Context) -> UIViewController {
-        let alert = UIAlertController(title: "Location Permission Required", message: "Please enable location permissions in settings.", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Go to Settings", style: .default, handler: { _ in
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                // If general settings page opens (URL scheme is available in iOS 8 and later.)
-                UIApplication.shared.open(url)
+//        .background(showSettingsAlert ? SettingsLauncher() : nil) 
+        // 사용자가 위치정보를 허용하지 않았을 경우 설정화면으로 이동시킴
+        .onChange(of: showSettingsAlert) { newValue in
+            if newValue {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+                showSettingsAlert = false // 상태 리셋
             }
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        
-        let viewController = UIViewController()
-        viewController.view.isHidden = true
-        DispatchQueue.main.async {
-            viewController.present(alert, animated: true, completion: nil)
         }
-        
-        return viewController
     }
 }
+
+
+//struct SettingsLauncher: UIViewControllerRepresentable {
+//    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+//        // This function doesn't need to do anything for an alert.
+//    }
+//    
+//    typealias UIViewControllerType = UIViewController
+//    
+//    func makeUIViewController(context: Context) -> UIViewController {
+//        let alert = UIAlertController(title: "Location Permission Required", message: "Please enable location permissions in settings.", preferredStyle: .alert)
+//        
+//        alert.addAction(UIAlertAction(title: "Go to Settings", style: .default, handler: { _ in
+//            if let url = URL(string: UIApplication.openSettingsURLString) {
+//                // If general settings page opens (URL scheme is available in iOS 8 and later.)
+//                UIApplication.shared.open(url)
+//            }
+//        }))
+//        
+//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        
+//        
+//        let viewController = UIViewController()
+//        viewController.view.isHidden = true
+//        DispatchQueue.main.async {
+//            viewController.present(alert, animated: true, completion: nil)
+//        }
+//        
+//        return viewController
+//    }
+//}

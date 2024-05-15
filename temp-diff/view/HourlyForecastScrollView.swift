@@ -74,7 +74,7 @@ struct HourlyForecastView: View {
             .padding(2)
         }.frame(width: 65, height: 150)
             .padding(2)
-            .background(Color("white"))
+            .background(Color("custom-white"))
             .cornerRadius(10)
     }
 }
