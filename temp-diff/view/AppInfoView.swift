@@ -41,8 +41,7 @@ struct AppInfoView: View {
             }
         }
         .padding()
-        .background(Color.white)
-        .foregroundColor(Color("text"))
+        .foregroundColor(Color("reverseText"))
     }
 }
 

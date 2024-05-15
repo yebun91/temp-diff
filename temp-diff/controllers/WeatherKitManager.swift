@@ -8,18 +8,14 @@
 import WeatherKit
 import CoreLocation
 
-// @MainActor: 이 어노테이션은 클래스의 모든 인스턴스 메서드와 프로퍼티가 메인 스레드에서 실행됨을 나타냅니다. SwiftUI에서 UI 업데이트와 관련된 작업을 메인 스레드에서 처리하는 것이 중요합니다.
 @MainActor class WeatherKitManager: ObservableObject {
-    // ObservableObject: SwiftUI의 데이터 바인딩에 사용되는 프로토콜입니다. 이 클래스의 인스턴스를 구독하고 있는 뷰들은 @Published 프로퍼티에 변경이 생길 때마다 자동으로 업데이트됩니다.
     @Published var weatherInfo : [String: HourWeather] = [:] {
-        // weatherInfo: 키가 시간(문자열 형식)이고 값이 HourWeather 타입인 딕셔너리입니다. 이 딕셔너리는 특정 시간대의 날씨 정보를 저장합니다
         didSet {
             updateTemp()
         }
     }
-    // 로딩중인가?
     @Published var isLoading = false
-    // updateTemp: 이 메서드는 날씨 정보가 변경될 때 호출되어, ObservableObject 프로토콜의 objectWillChange 이벤트를 발생시킵니다. 이를 통해 클래스의 구독자들에게 변화를 알립니다.
+    
     func updateTemp() {
         Task {
             self.objectWillChange.send()
@@ -30,7 +26,10 @@ import CoreLocation
     /**
      어제부터 내일까지의 날씨 데이터를 api로 불러옴
      */
-    func getWeathersFromYesterdayToTomorrow(latitude: Double, longitude: Double) async {
+    func getWeathersFromYesterdayToTomorrow(location: CLLocation) async {
+        let latitude = location.coordinate.latitude
+        let longitude = location.coordinate.longitude
+        
         let location = CLLocation(latitude: latitude, longitude: longitude)
         let now = Date()
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: now)!
