@@ -27,8 +27,15 @@ struct AppInfoView: View {
                     .font(.body)
                     .multilineTextAlignment(.center)
             }
-            Text(NSLocalizedString("WeatherKitInfo", comment: "웨더키트 설명"))
-                .font(.body)
+            VStack {
+                    Text("Data provided by  Weather")
+                        .font(.body)
+                        .multilineTextAlignment(.center)
+                    Link("Apple Weather Legal Attribution", destination: URL(string: "https://weatherkit.apple.com/legal-attribution.html")!)
+                        .font(.body)
+                        .foregroundColor(.blue)
+                        .multilineTextAlignment(.center)
+                }.padding()
             
             Button(action: {
               presentationMode.wrappedValue.dismiss()
@@ -41,7 +48,7 @@ struct AppInfoView: View {
             }
         }
         .padding()
-        .foregroundColor(Color("reverseText"))
+        .foregroundColor(Color("text"))
     }
 }
 
