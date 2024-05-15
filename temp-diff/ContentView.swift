@@ -21,10 +21,10 @@ struct ContentView: View {
                 AdView().frame(height: 60)
             }.padding()
 
-            if weatherKitManager.isLoading {
+            if weatherKitManager.isLoading || locationDataManager.isLoading {
                 // 로딩 화면 구현
                 Color.black.opacity(0.5)
-                    .ignoresSafeArea() // 화면 전체를 덮습니다.
+                    .ignoresSafeArea()
                 Text("Loading...")
                     .font(.largeTitle)
                     .foregroundColor(.white)
@@ -34,17 +34,31 @@ struct ContentView: View {
         // 사용자가 앱을 시작할 때와 앱으로 다시 돌아올 때 모두 최신 날씨 정보를 불러옴.
         .onAppear {
             Task {
-                await weatherKitManager.getWeathersFromYesterdayToTomorrow(latitude: locationDataManager.latitude, longitude: locationDataManager.longitude)
-                     }
-                 }
-        .task{
-            locationDataManager.weatherKitManager = weatherKitManager // 인스턴스를 공유합니다.
-            await weatherKitManager.getWeathersFromYesterdayToTomorrow(latitude: locationDataManager.latitude, longitude: locationDataManager.longitude)
+                await fetchInitialData()
+            }
         }
+        // currentLocation 값이 변경되었을 때 날씨데이터, 지역명데이터를 불러옴
+        .onChange(of:locationDataManager.currentLocation, perform: {
+            newLocation in Task {
+                if let location = newLocation {
+                    await weatherKitManager.getWeathersFromYesterdayToTomorrow(location: location)
+                    await locationDataManager.fetchLocationName(location: location)
+                }
+            }
+        })
+        .background(Color("backgraund"))
         .environmentObject(weatherKitManager)
         .environmentObject(locationDataManager)
-        .background(Color("backgraund"))
-        
+    }
+    
+    private func fetchInitialData() async {
+        if let location = locationDataManager.currentLocation {
+            // 이미 위치 데이터가 있는 경우
+            await weatherKitManager.getWeathersFromYesterdayToTomorrow(location: location)
+        } else {
+            // 위치 데이터가 없는 경우 위치 권한 요청 및 위치 데이터 가져오기
+            locationDataManager.requestLocation()
+        }
     }
 }
 

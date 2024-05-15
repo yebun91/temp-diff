@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		78388D0F2BF2111C00524B5E /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78388D0E2BF2111C00524B5E /* AppInfoView.swift */; };
 		789454E42BEF74FE0058BEBD /* temp_diffApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789454E32BEF74FE0058BEBD /* temp_diffApp.swift */; };
 		789454E62BEF74FE0058BEBD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789454E52BEF74FE0058BEBD /* ContentView.swift */; };
 		789454E82BEF75000058BEBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 789454E72BEF75000058BEBD /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		78388D0E2BF2111C00524B5E /* AppInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
 		788D27B82BEF839200D5373F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		788D27B92BEF855200D5373F /* temp-diff.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "temp-diff.entitlements"; sourceTree = "<group>"; };
 		789454E02BEF74FE0058BEBD /* temp-diff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "temp-diff.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +134,7 @@
 				789454F52BEF75530058BEBD /* HourlyForecastScrollView.swift */,
 				789454F42BEF75530058BEBD /* TopBarView.swift */,
 				789454F22BEF75530058BEBD /* WeatherIndicatorView.swift */,
+				78388D0E2BF2111C00524B5E /* AppInfoView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 			knownRegions = (
 				en,
 				ko,
+				Base,
 			);
 			mainGroup = 789454D72BEF74FE0058BEBD;
 			productRefGroup = 789454E12BEF74FE0058BEBD /* Products */;
@@ -270,6 +274,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78388D0F2BF2111C00524B5E /* AppInfoView.swift in Sources */,
 				789454FA2BEF75530058BEBD /* TopBarView.swift in Sources */,
 				789455062BEF756D0058BEBD /* WeatherForecast.swift in Sources */,
 				789454E62BEF74FE0058BEBD /* ContentView.swift in Sources */,
@@ -438,7 +443,7 @@
 				CODE_SIGN_ENTITLEMENTS = "temp-diff/temp-diff.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"temp-diff/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z4N8AJF7BQ;
@@ -447,7 +452,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "temp-diff/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "날씨 정보 제공을 위해 위치 정보 사용이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location data is used to provide weather information for your area.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -462,6 +467,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "yesterday-weather-app";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -477,7 +486,7 @@
 				CODE_SIGN_ENTITLEMENTS = "temp-diff/temp-diff.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"temp-diff/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z4N8AJF7BQ;
@@ -486,7 +495,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "temp-diff/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "날씨 정보 제공을 위해 위치 정보 사용이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location data is used to provide weather information for your area.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -501,6 +510,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "yesterday-weather-app";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -10,4 +10,7 @@
 "Rainfall" = "Rainfall";
 "TempDifference" = "Yesterday-Today temp difference";
 "NowTemp" = "Current temp";
+"appName" = "Yesterday-weather";
+"close" = "close";
+"WeatherKitInfo" = "Weather data provided by Apple's WeatherKit.";
 
