@@ -9,19 +9,7 @@ import WeatherKit
 import CoreLocation
 
 @MainActor class WeatherKitManager: ObservableObject {
-    @Published var weatherInfo : [String: HourWeather] = [:] {
-        didSet {
-            updateTemp()
-        }
-    }
-    @Published var isLoading = false
-    
-    func updateTemp() {
-        Task {
-            self.objectWillChange.send()
-        }
-    }
-    @Published var feelTemperature: String = ""
+    @Published var weatherInfo : [String: HourWeather] = [:]
     
     /**
      어제부터 내일까지의 날씨 데이터를 api로 불러옴
@@ -36,7 +24,6 @@ import CoreLocation
         let tomorrow = Calendar.current.date(byAdding: .day, value: +1, to: now)!
         
         do {
-            isLoading = true
             let apiData = try await Task.detached(priority: .userInitiated) {
                 return try await WeatherService.shared.weather(for: location, including: .hourly(startDate: yesterday, endDate: tomorrow))
                 
@@ -51,7 +38,6 @@ import CoreLocation
                 let hourWeatherDateString = formatter.string(from: hourWeather.date)
                 weatherInfo[hourWeatherDateString] = hourWeather
             }
-            isLoading = false
             
         } catch {
             fatalError("\(error)")

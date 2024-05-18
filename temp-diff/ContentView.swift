@@ -21,7 +21,7 @@ struct ContentView: View {
                 AdView().frame(height: 60)
             }.padding()
 
-            if weatherKitManager.isLoading || locationDataManager.isLoading {
+            if locationDataManager.isLoading {
                 // 로딩 화면 구현
                 Color.black.opacity(0.5)
                     .ignoresSafeArea()
