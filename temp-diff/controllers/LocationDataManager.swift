@@ -44,17 +44,7 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
         self.currentLocation = location
         isLoading = false
         
-        // 위치 이름을 가져오기 위한 지오코더 사용
-        let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
-            guard let self = self else { return }
-            if let placemark = placemarks?.first {
-                self.locationName = placemark.subLocality ?? "Unknown"
-                self.saveLocationToUserDefaults(location, name: self.locationName)
-            } else {
-                self.saveLocationToUserDefaults(location, name: "Unknown")
-            }
-        }
+        fetchLocationName(location: location)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -82,21 +72,26 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
     /**
      현재 위치에 대한 이름정보 가져옴
      */
-    func fetchLocationName(location: CLLocation) async {
+    func fetchLocationName(location: CLLocation) {
+                
         let geocoder = CLGeocoder()
-        
-        do {
-            let placemarks = try await geocoder.reverseGeocodeLocation(location)
-            guard let placemark = placemarks.first else {
-                print("No valid placemarks found.")
-                return
+            
+        geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
+            guard let self = self else { return }
+            
+            var locationName: String
+            
+            if let placemark = placemarks?.first {
+                locationName = placemark.subLocality ?? "Unknown Location"
+            } else {
+                locationName = "Unknown Location"
             }
             
+            self.saveLocationToUserDefaults(location, name: locationName)
+            
             DispatchQueue.main.async {
-                self.locationName = placemark.subLocality ?? "Unknown Location"
+                self.locationName = locationName
             }
-        } catch {
-            print("Unable to reverse geocode the given location. Error: \(error)")
         }
     }
     
