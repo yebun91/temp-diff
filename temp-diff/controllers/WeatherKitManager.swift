@@ -17,7 +17,6 @@ import CoreLocation
     func getWeathersFromYesterdayToTomorrow(location: CLLocation) async {
         let latitude = location.coordinate.latitude
         let longitude = location.coordinate.longitude
-        
         let location = CLLocation(latitude: latitude, longitude: longitude)
         let now = Date()
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: now)!
