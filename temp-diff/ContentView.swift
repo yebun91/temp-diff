@@ -7,9 +7,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     @StateObject var weatherKitManager = WeatherKitManager()
     @StateObject var locationDataManager = LocationDataManager()
+    @Environment(\.scenePhase) private var scenePhase
     
     var body: some View {
         ZStack {
@@ -42,10 +42,15 @@ struct ContentView: View {
             newLocation in Task {
                 if let location = newLocation {
                     await weatherKitManager.getWeathersFromYesterdayToTomorrow(location: location)
-                    await locationDataManager.fetchLocationName(location: location)
+                    locationDataManager.fetchLocationName(location: location)
                 }
             }
         })
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                fetchWeatherData()
+            }
+        }
         .background(Color("backgraund"))
         .environmentObject(weatherKitManager)
         .environmentObject(locationDataManager)
@@ -58,6 +63,15 @@ struct ContentView: View {
         } else {
             // 위치 데이터가 없는 경우 위치 권한 요청 및 위치 데이터 가져오기
             locationDataManager.requestLocation()
+        }
+    }
+    
+    // 화면이 꺼졌다가 다시 켜졌을 때 
+    private func fetchWeatherData() {
+        if let location = locationDataManager.currentLocation {
+            Task {
+                await weatherKitManager.getWeathersFromYesterdayToTomorrow(location: location)
+            }
         }
     }
 }
